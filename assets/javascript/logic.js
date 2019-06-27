@@ -3,7 +3,7 @@ var topics = ["Queen", "Green Day", "Misfits"];
 function renderButtons() {
     $("#band-buttons").empty();
     for (var i = 0; i < topics.length; i++) {
-        var a = $("<button>");
+        var a = $("<button data-bands='Misfits'>");
         a.addClass("band");
         a.attr("data-name", topics[i]);
         a.text(topics[i]);
