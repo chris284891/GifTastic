@@ -8,21 +8,22 @@ $("button").on("click", function () {
     $.ajax({
         url: queryURL,
         method: "GET"
-    }).then(function (response) {
-        console.log(response);
-    });
-    var topic = response.data;
+    })
+        .then(function (response) {
+            console.log(response);
+            var topic = response.data;
 
-    for (var i = 0; i < topic.length; i++) {
-        if (topic[i].rating !== "r" && topic[i].rating !== "pg-13") {
-            var gifSpace = $("<div>");
-            var rating = topic[i].rating;
-            var p = $("<p>").text("Rating: " + rating);
-            var bandImage = $("<img>");
-            bandImage.attr("src", topic[i].images.fixed_height.url);
-            gifSpace.append(p);
-            gifSpace.append(bandImage);
-            $("#bandGifs").prepend(gifSpace);
-        }
-    }
+            for (var i = 0; i < topic.length; i++) {
+                if (topic[i].rating !== "r" && topic[i].rating !== "pg-13") {
+                    var gifSpace = $("<div>");
+                    var rating = topic[i].rating;
+                    var p = $("<p>").text("Rating: " + rating);
+                    var bandImage = $("<img>");
+                    bandImage.attr("src", topic[i].images.fixed_height.url);
+                    gifSpace.append(p);
+                    gifSpace.append(bandImage);
+                    $("#bandGifs").prepend(gifSpace);
+                }
+            }
+        });
 });
