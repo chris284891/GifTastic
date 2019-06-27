@@ -1,15 +1,25 @@
-var topics = ["Queen", "Green Day", "Misfits"]
+var topics = ["Queen", "Green Day", "Misfits"];
 
 function renderButtons() {
     $("#band-buttons").empty();
     for (var i = 0; i < topics.length; i++) {
-        var button = $("<button>");
-        button.addClass("band");
-        button.attr("band-name", topics[i]);
-        button.text(topics[i]);
-        $("#band-buttons").append(button);
+        var a = $("<button>");
+        a.addClass("band");
+        a.attr("data-name", topics[i]);
+        a.text(topics[i]);
+        $("#band-buttons").append(a);
+        console.log(a);
+        console.log(i);
     }
 }
+
+$("#add-band").on("click", function(event) {
+    event.preventDefault();
+    var bandInput = $("#band-input").val().trim();
+    topics.push(bandInput);
+    renderButtons();
+});
+renderButtons();
 
 $("button").on("click", function () {
     var bands = $(this).attr("data-bands");
