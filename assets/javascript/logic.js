@@ -1,4 +1,15 @@
+var topics = ["Queen", "Green Day", "Misfits"]
 
+function renderButtons() {
+    $("#band-buttons").empty();
+    for (var i = 0; i < topics.length; i++) {
+        var button = $("<button>");
+        button.addClass("band");
+        button.attr("band-name", topics[i]);
+        button.text(topics[i]);
+        $("#band-buttons").append(button);
+    }
+}
 
 $("button").on("click", function () {
     var bands = $(this).attr("data-bands");
@@ -11,15 +22,15 @@ $("button").on("click", function () {
     })
         .then(function (response) {
             console.log(response);
-            var topic = response.data;
+            var results = response.data;
 
-            for (var i = 0; i < topic.length; i++) {
-                if (topic[i].rating !== "r" && topic[i].rating !== "pg-13") {
+            for (var i = 0; i < results.length; i++) {
+                if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
                     var gifSpace = $("<div>");
-                    var rating = topic[i].rating;
+                    var rating = results[i].rating;
                     var p = $("<p>").text("Rating: " + rating);
                     var bandImage = $("<img>");
-                    bandImage.attr("src", topic[i].images.fixed_height.url);
+                    bandImage.attr("src", results[i].images.fixed_height.url);
                     gifSpace.append(p);
                     gifSpace.append(bandImage);
                     $("#bandGifs").prepend(gifSpace);
@@ -27,3 +38,4 @@ $("button").on("click", function () {
             }
         });
 });
+
