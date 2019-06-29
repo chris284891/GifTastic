@@ -1,4 +1,5 @@
-var topics = ["Queen", "Nirvana", "Misfits"];
+var topics = ["Queen", "Nirvana", "Misfits", "Drake"];
+// there are not enough gifs for Nirvana or Misfits to even populate 10 :( sooooo Drake.
 
 function renderButtons() {
     $("#band-buttons").empty();
@@ -12,7 +13,7 @@ function renderButtons() {
         console.log(i);
     }
 }
-
+// I can't get the new button to search and it actually breaks all other buttons in the process
 $("#add-band").on("click", function (event) {
     event.preventDefault();
     var bandInput = $("#band-input").val().trim();
@@ -25,7 +26,7 @@ $("button").on("click", function () {
     $(".bandGifs").empty();
     var bands = $(this).attr("data-bands");
 
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + bands + "&api_key=JnGmCnV1TZYxyeo7aniDfwJIqUqB8wDX";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?limit=10&q=" + bands + "&api_key=JnGmCnV1TZYxyeo7aniDfwJIqUqB8wDX";
 
     $.ajax({
         url: queryURL,
@@ -54,6 +55,7 @@ $("button").on("click", function () {
             }
         });
 });
+// I can't get gifs to change state on click
 $(".bandGifs").on("click", function () {
     var state = $(this).attr("data-state");
     if (state === "still") {
