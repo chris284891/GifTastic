@@ -22,6 +22,7 @@ $("#add-band").on("click", function (event) {
 renderButtons();
 
 $("button").on("click", function () {
+    $(".bandGifs").empty();
     var bands = $(this).attr("data-bands");
 
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + bands + "&api_key=JnGmCnV1TZYxyeo7aniDfwJIqUqB8wDX";
