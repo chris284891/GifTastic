@@ -13,7 +13,7 @@ function renderButtons() {
     }
 }
 
-$("#add-band").on("click", function(event) {
+$("#add-band").on("click", function (event) {
     event.preventDefault();
     var bandInput = $("#band-input").val().trim();
     topics.push(bandInput);
@@ -41,9 +41,24 @@ $("button").on("click", function () {
                     var p = $("<p>").text("Rating: " + rating);
                     var bandImage = $("<img>");
                     bandImage.attr("src", results[i].images.fixed_height.url);
+                    bandImage.attr("src", results[i].images.original_still.url);
+                    bandImage.attr("data-still", results[i].images.original_still.url);
+                    bandImage.attr("data-animate", results[i].images.original.url);
+                    bandImage.attr("data-state", "still");
+                    bandImage.attr("class", "gif");
                     gifSpace.append(p);
                     gifSpace.append(bandImage);
-                    $("#bandGifs").prepend(gifSpace);
+                    $(".bandGifs").prepend(gifSpace);
+                    $(".bandGifs").on("click", function () {
+                        var state = $(this).attr("data-state");
+                        if (state === "still") {
+                            $(this).attr("src", $(this).attr("data-animate"));
+                            $(this).attr("data-state", "animate");
+                        } else {
+                            $(this).attr("src", $(this).attr("data-still"));
+                            $(this).attr("data-state", "still");
+                        }
+                    });
                 }
             }
         });
