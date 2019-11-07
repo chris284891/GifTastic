@@ -1,5 +1,5 @@
 var topics = ["Queen", "Nirvana", "Misfits", "Drake"];
-// there are not enough gifs for Nirvana or Misfits to even populate 10 :( sooooo Drake.
+// there are not enough gifs for Nirvana or Misfits to even populate 10 :( sooooo, Drake?
 
 function renderButtons() {
     $("#band-buttons").empty();
@@ -19,6 +19,39 @@ $("#add-band").on("click", function (event) {
     var bandInput = $("#band-input").val().trim();
     topics.push(bandInput);
     renderButtons();
+    $("button").on("click", function () {
+        $(".bandGifs").empty();
+        var bands = $(this).attr("data-bands");
+
+        var queryURL = "https://api.giphy.com/v1/gifs/search?limit=10&q=" + bands + "&api_key=JnGmCnV1TZYxyeo7aniDfwJIqUqB8wDX";
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        })
+            .then(function (response) {
+                console.log(response);
+                var results = response.data;
+
+                for (var i = 0; i < results.length; i++) {
+                    if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
+                        var gifSpace = $("<div>");
+                        var rating = results[i].rating;
+                        var p = $("<p>").text("Rating: " + rating);
+                        var bandImage = $("<img>");
+                        bandImage.attr("src", results[i].images.fixed_height.url);
+                        bandImage.attr("src", results[i].images.original_still.url);
+                        bandImage.attr("data-still", results[i].images.original_still.url);
+                        bandImage.attr("data-animate", results[i].images.original.url);
+                        bandImage.attr("data-state", "still");
+                        bandImage.addClass("band-Image");
+                        gifSpace.append(p);
+                        gifSpace.append(bandImage);
+                        $(".bandGifs").prepend(gifSpace);
+                    }
+                }
+            });
+    });
 });
 renderButtons();
 
@@ -47,7 +80,7 @@ $("button").on("click", function () {
                     bandImage.attr("data-still", results[i].images.original_still.url);
                     bandImage.attr("data-animate", results[i].images.original.url);
                     bandImage.attr("data-state", "still");
-                    bandImage.attr("class", "gif");
+                    bandImage.addClass("band-Image");
                     gifSpace.append(p);
                     gifSpace.append(bandImage);
                     $(".bandGifs").prepend(gifSpace);
@@ -56,7 +89,7 @@ $("button").on("click", function () {
         });
 });
 // I can't get gifs to change state on click
-$(".bandGifs").on("click", function () {
+$(document).on("click", ".band-Image", function () {
     var state = $(this).attr("data-state");
     if (state === "still") {
         $(this).attr("src", $(this).attr("data-animate"));
