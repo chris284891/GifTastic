@@ -5,7 +5,7 @@
 ![screenshot3](assets/readmeScreenshots/giftastic3.png)
 
 # Link
-https://chris284891.github.io/GifTastic/
+https://swedishkinda.github.io/GifTastic/
 
 # Giftastic
 With this app I expiremented with the Giphy API.
